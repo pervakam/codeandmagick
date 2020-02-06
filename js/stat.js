@@ -32,7 +32,7 @@ var findMaxElement = function (arr) {
   return maxElement;
 };
 
-window.renderStatistics = function (ctx, players, time) {
+window.renderStatistics = function (ctx, names, times) {
   renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, 'rgba(0, 0, 0, 0.7)');
   renderCloud(ctx, CLOUD_X, CLOUD_Y, '#fff');
 
@@ -41,21 +41,20 @@ window.renderStatistics = function (ctx, players, time) {
   ctx.fillText('Ура вы победили!', 250, 30);
   ctx.fillText('Список результатов:', 245, 50);
 
-  // var players = ['Вы', 'Ниф-Ниф', 'Наф-Наф', 'Нуф-Нуф'];
-  var resultColor = ['#000', 'hsl(240, 20%, 50%)', 'hsl(240, 100%, 50%)', 'hsl(240, 40%, 50%)'];
-  var maxTime = findMaxElement(time);
+  var maxTime = findMaxElement(times);
 
-
-  for (var i = 0; i < players.length; i++) {
+  for (var i = 0; i < names.length; i++) {
+    var resultBox = (RESULT_HEIGHT * times[i]) / maxTime;
+    var resultColor = ['rgba(255, 0, 0, 1)', 'hsl(255, '+Math.random() * 100+'%, 50%)', 'hsl(255, '+Math.random() * 100+'%, 50%)', 'hsl(255, '+Math.random() * 100+'%, 50%)'];
     ctx.fillStyle = NAME_COLOR;
-    ctx.fillText(players[i], NAME_X + RESULT_GAP * i, NAME_Y);
-
-    var resultBox = (RESULT_HEIGHT * time[i]) / maxTime;
+    ctx.fillText(names[i], NAME_X + RESULT_GAP * i, NAME_Y);
 
     ctx.fillStyle = resultColor[i];
     ctx.fillRect(RESULT_X + RESULT_GAP * i, RESULT_Y, RESULT_WIDTH, resultBox);
     ctx.fillStyle = NAME_COLOR;
-    ctx.fillText(Math.round(time[i]), NAME_X + RESULT_GAP * i, RESULT_Y + resultBox - 5);
+    ctx.fillText(Math.round(times[i]), NAME_X + RESULT_GAP * i, RESULT_Y + resultBox - 5);
   }
+
+
 };
 
