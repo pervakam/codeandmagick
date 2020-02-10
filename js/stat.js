@@ -47,24 +47,24 @@ window.renderStatistics = function (ctx, names, times) {
 
   var maxTime = findMaxElement(times);
 
+  var createResult = function () {
+
+    var resultBox = (RESULT_HEIGHT * times[i]) / maxTime;
+    var resultColor = 'hsl(255, ' + Math.random() * 100 + '%, 50%)';
+
+    ctx.fillStyle = NAME_COLOR;
+    ctx.fillText(names[i], NAME_X + RESULT_GAP * i, NAME_Y);
+    if (names[i] === 'Вы') {
+      ctx.fillStyle = 'rgba(255, 0, 0, 1)';
+    } else {
+      ctx.fillStyle = resultColor;
+    }
+    ctx.fillRect(RESULT_X + RESULT_GAP * i, RESULT_Y, RESULT_WIDTH, resultBox);
+    ctx.fillStyle = NAME_COLOR;
+    ctx.fillText(Math.round(times[i]), NAME_X + RESULT_GAP * i, RESULT_Y + resultBox - 5);
+  };
+
   for (var i = 0; i < names.length; i++) {
-    var createResult = function () {
-
-      var resultBox = (RESULT_HEIGHT * times[i]) / maxTime;
-      var resultColor = 'hsl(255, ' + Math.random() * 100 + '%, 50%)';
-
-      ctx.fillStyle = NAME_COLOR;
-      ctx.fillText(names[i], NAME_X + RESULT_GAP * i, NAME_Y);
-      if (names[i] === 'Вы') {
-        ctx.fillStyle = 'rgba(255, 0, 0, 1)';
-      } else {
-        ctx.fillStyle = resultColor;
-      }
-      ctx.fillRect(RESULT_X + RESULT_GAP * i, RESULT_Y, RESULT_WIDTH, resultBox);
-      ctx.fillStyle = NAME_COLOR;
-      ctx.fillText(Math.round(times[i]), NAME_X + RESULT_GAP * i, RESULT_Y + resultBox - 5);
-    };
-
     createResult();
   }
 };
